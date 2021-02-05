@@ -1,0 +1,19 @@
+argparse
+chevron
+cloudevents
+json-spec
+invoke
+datasette
+pandas
+# development
+pytest
+pytest-mock
+assertpy
+setuptools
+wheel
+twine
+flake8
+mypy
+coverage
+safety
+bandit
