@@ -2,9 +2,9 @@ import logging
 from typing import Dict, Any
 
 from cloudevents.http import CloudEvent
-from common.config import Config
 
 from .history import History
+from ..common.config import Config
 
 
 def config2attributes(config: Config) -> Any:
