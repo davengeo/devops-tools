@@ -5,7 +5,7 @@ setup(
     author_email="me@davengeo.com",
     description="devops base library dist",
     url="https://github.com/davengeo/devops-tools",
-    name="devops-tools",
+    name="devops-tools-daven",
     packages=[
         'devops',
         'devops.reports',
