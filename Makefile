@@ -95,5 +95,4 @@ py-full-build: py-activate py-clean py-safety py-lint py-test py-build ## Clean,
 py-db-serve:  py-activate ## Serve the database by http in port HISTORY_PORT
 	$(eval HISTORY_DB	= $(call get_ini_value,app.ini,Paths,history))
 	$(eval HISTORY_PORT	= $(call get_ini_value,app.ini,History,port))
-	@echo ${HISTORY_DB}
 	${VENV_NAME}/bin/datasette serve --port ${HISTORY_PORT} ${HISTORY_DB}

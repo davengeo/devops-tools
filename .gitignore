@@ -142,3 +142,5 @@ cython_debug/
 /.idea/
 /devops-tools.iml
 /config/history/test.db
+/.pypirc
+/.pypirc-prod

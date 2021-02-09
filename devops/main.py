@@ -1,7 +1,7 @@
 import argparse
 
 
-def f():
+def f() -> None:
     pass
 
 

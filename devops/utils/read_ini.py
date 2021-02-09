@@ -1,10 +1,11 @@
 import configparser
 import sys
+from typing import Any
 
 config = configparser.ConfigParser()
 
 
-def main(argv) -> None:
+def main(argv: Any) -> None:
     if len(argv) < 4:
         usage_exit()
     try:
@@ -15,11 +16,11 @@ def main(argv) -> None:
         usage_exit()
 
 
-def print_exception(e: Exception):
+def print_exception(e: Exception) -> None:
     print(e)
 
 
-def usage_exit():
+def usage_exit() -> None:
     print('Usage: \n\tpython3 -m devops.utils.read_ini <ini-file> <section> <entry>')
     print('\n\tjust print the value for <entry> found in the indicated <section> of the <ini-file>')
     sys.exit(-1)
