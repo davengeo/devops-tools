@@ -6,6 +6,7 @@ setup(
     description="devops base library dist",
     url="https://github.com/davengeo/devops-tools",
     name="devops-tools-daven",
+    version='0.0.1',
     packages=[
         'devops',
         'devops.reports',

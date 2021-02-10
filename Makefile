@@ -10,6 +10,7 @@ HAS_PYTHON       := $(shell command -v python3;)
 
 PYTHON=${VENV_NAME}/bin/python3
 get_ini_value = ${shell $(PYTHON) -m devops.utils.read_ini $(1) $(2) $(3)}
+get_setup_value = ${shell $(PYTHON) -m devops.utils.read_setup $(1)}
 
 
 help: ## Print this help.
@@ -66,9 +67,11 @@ py-test: ## Run the pytest test suite.
 
 .PHONY: py-clean
 py-clean: ## Remove artifacts before new build.
+	$(eval DIST_NAME = $(call get_setup_value,name))
+	$(eval DIST_NAME = $(subst -,_,${DIST_NAME}))
 	rm -rf dist
 	rm -rf build
-	rm -rf multipoint_setup_for_rabbitmq.egg-info
+	rm -rf ${DIST_NAME}.egg-info
 	rm -rf .pytest_cache
 	rm -rf .mypy_cache
 	rm -f .coverage
@@ -87,6 +90,7 @@ py-build: 	## Build a tarball distribution file
 py-upload:  ## Upload a wheel to PyPi
 	${VENV_NAME}/bin/twine check dist/*
 	${VENV_NAME}/bin/twine upload dist/* --config-file .pypirc --verbose
+#	${VENV_NAME}/bin/twine upload dist/* --config-file .pypirc-prod --verbose
 
 .PHONY: py-full-build
 py-full-build: py-activate py-clean py-safety py-lint py-test py-build ## Clean, check, test, build but not upload.
@@ -96,3 +100,9 @@ py-db-serve:  py-activate ## Serve the database by http in port HISTORY_PORT
 	$(eval HISTORY_DB	= $(call get_ini_value,app.ini,Paths,history))
 	$(eval HISTORY_PORT	= $(call get_ini_value,app.ini,History,port))
 	${VENV_NAME}/bin/datasette serve --port ${HISTORY_PORT} ${HISTORY_DB}
+
+.PHONY: py-docker
+py-docker:  py-activate ## Serve the database by http in port HISTORY_PORT
+	$(eval DIST_NAME = $(call get_setup_value,name))
+	$(eval DIST_VERSION = $(call get_setup_value,version))
+	docker build . --tag ${DIST_NAME}:${DIST_VERSION}
