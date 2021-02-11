@@ -5,8 +5,8 @@ import pytest
 from assertpy import assert_that
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
-from devops.templates.templates import Templates  # noqa: E402
-from devops.common.config import Config  # noqa: E402
+from devopstoolsdaven.templates.templates import Templates  # noqa: E402
+from devopstoolsdaven.common.config import Config  # noqa: E402
 
 config = Config(os.path.join(os.path.dirname(__file__), '../../app.ini'))
 

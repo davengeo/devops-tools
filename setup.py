@@ -6,13 +6,13 @@ setup(
     description="devops base library dist",
     url="https://github.com/davengeo/devops-tools",
     name="devops-tools-daven",
-    version='0.0.2',
+    version='0.0.3',
     packages=[
-        'devops',
-        'devops.reports',
-        'devops.common',
-        'devops.templates',
-        'devops.utils'
+        'devopstoolsdaven',
+        'devopstoolsdaven.reports',
+        'devopstoolsdaven.common',
+        'devopstoolsdaven.templates',
+        'devopstoolsdaven.utils'
     ],
     install_requires=['chevron', 'cloudevents', 'json-spec', 'invoke', 'datasette'],
     package_data={

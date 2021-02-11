@@ -1,11 +1,11 @@
 import logging
 import os
-
 import sys
+
 from assertpy import assert_that, fail
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../devops')))
-from common.config import Config  # noqa: E402
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
+from devopstoolsdaven.common.config import Config  # noqa: E402
 
 
 def test_should_get_config_for_logging_level() -> None:

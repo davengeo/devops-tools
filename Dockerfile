@@ -1,6 +1,6 @@
 FROM python:latest
 
-COPY /devops /app
+COPY / /app
 ADD requirements.txt /app/
 WORKDIR /app
 
