@@ -3,6 +3,7 @@ chevron
 cloudevents
 json-spec
 invoke
+pyramda
 datasette
 # development
 pytest

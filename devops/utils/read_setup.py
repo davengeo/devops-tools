@@ -1,21 +1,21 @@
 import sys
 from distutils.core import run_setup
-from typing import Any
+from typing import Any, Text, Dict
+
+ACCEPTED: Dict[Text, Any] = {
+    'name': lambda a: a.get_name(),
+    'author': lambda a: a.get_author(),
+    'version': lambda a: a.get_version(),
+    'all': lambda a: a.__dict__
+}
 
 
 def main(argv: Any) -> None:
-    if len(argv) < 2 or argv[1] not in ['name', 'author', 'version', 'all']:
+    if len(argv) < 2 or argv[1] not in ACCEPTED.keys():
         usage_exit()
     else:
         result = run_setup('./setup.py', stop_after='init')
-        if argv[1] == 'name':
-            print(result.get_name())  # type: ignore[attr-defined]
-        if argv[1] == 'author':
-            print(result.get_author())  # type: ignore[attr-defined]
-        if argv[1] == 'version':
-            print(result.get_version())  # type: ignore[attr-defined]
-        if argv[1] == 'all':
-            print(result.__dict__)
+        print(ACCEPTED[argv[1]](result))
 
 
 def usage_exit() -> None:
