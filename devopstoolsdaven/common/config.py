@@ -1,8 +1,9 @@
 import configparser
 import json
 import os
+from typing import Dict, Text, Tuple
 
-from typing import Dict, Text
+import yaml
 
 
 class Config(object):
@@ -14,6 +15,10 @@ class Config(object):
 
     def get_value(self, section: str, key: str) -> str:
         return self.config[section][key]
+
+    def get_tuple(self, section: str, key: str) -> Tuple[Text, ...]:
+        raw = self.get_value(section=section, key=key).split('\n')
+        return tuple(str(x).strip() for x in tuple(raw) if x)
 
     def get_section(self, section: str) -> Dict[Text, Text]:
         result = {}
@@ -30,3 +35,7 @@ class Config(object):
     def get_json_file(self, key: str, file_name: str) -> dict:
         with open(self.get_file_path(key=key, file_name=file_name)) as json_file:
             return json.load(json_file)
+
+    def get_yaml_file(self, key: str, file_name: str) -> dict:
+        with open(self.get_file_path(key=key, file_name=file_name)) as yaml_file:
+            return yaml.safe_load(yaml_file)

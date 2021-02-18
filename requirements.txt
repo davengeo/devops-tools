@@ -1,15 +1,16 @@
-argparse
-chevron
-cloudevents
+argparse~=1.4.0
+chevron~=0.14.0
+cloudevents~=1.2.0
 json-spec
 invoke
 pyramda
 datasette
+PyYAML
 # development
-pytest
+pytest~=6.2.2
 pytest-mock
-assertpy
-setuptools
+assertpy~=1.1
+setuptools~=53.0.0
 wheel
 twine
 flake8

@@ -49,7 +49,8 @@ class History(object):
 
     def persist(self, event: str) -> None:
         c = self.__conn.cursor()
-        c.execute('''INSERT INTO Logs(executionId, record) VALUES (?, ?)''', (self.get_current(), event))
+        execution_id: int = self.get_current()
+        c.execute('''INSERT INTO Logs(executionId, record) VALUES (?, ?)''', (execution_id, event))
         self.__conn.commit()
 
 

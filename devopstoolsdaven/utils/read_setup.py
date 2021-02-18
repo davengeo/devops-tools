@@ -1,8 +1,8 @@
 import sys
 from distutils.core import run_setup
-from typing import Any, Text, Dict
+from typing import Any, Text, Dict, Callable
 
-ACCEPTED: Dict[Text, Any] = {
+ACCEPTED: Dict[Text, Callable[[Any], Any]] = {
     'name': lambda a: a.get_name(),
     'author': lambda a: a.get_author(),
     'version': lambda a: a.get_version(),

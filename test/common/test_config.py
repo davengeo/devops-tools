@@ -10,8 +10,8 @@ from devopstoolsdaven.common.config import Config  # noqa: E402
 
 def test_should_get_config_for_logging_level() -> None:
     config = Config(os.path.join(os.path.dirname(__file__), '../../app.ini'))
-    logging_level = config.get_value('logging', 'logging_level')
-    assert_that(logging_level).is_equal_to('DEBUG')
+    logging_level = config.get_value('Paths','configuration')
+    assert_that(logging_level).is_equal_to('./config')
     logging.basicConfig(format='%(levelname)s:%(message)s', level=logging_level)
     logging.debug('testing config files')
 

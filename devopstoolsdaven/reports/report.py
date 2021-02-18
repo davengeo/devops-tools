@@ -1,9 +1,8 @@
-import logging
-from typing import Dict, Any
+from typing import Dict, Any, Tuple, Text, List
 
 from cloudevents.http import CloudEvent
 
-from .history import History
+from .processor import Processor
 from ..common.config import Config
 
 
@@ -11,12 +10,16 @@ def config2attributes(config: Config) -> Any:
     return config.get_section('CloudEvents')
 
 
+def get_processors(config: Config) -> Tuple[Text, ...]:
+    return config.get_tuple(section='Reports', key='processors')
+
+
 class Report(object):
-    def __init__(self, attributes: dict, history: History):
+    def __init__(self, attributes: dict, processors: List[Processor]):
         self.__attributes: Dict = attributes
-        self.__history = history
+        self.__processors: List[Processor] = processors
 
     def add_event(self, record: dict) -> None:
-        event = CloudEvent(attributes=self.__attributes, data=record)
-        logging.info(str(event))
-        self.__history.persist(event=str(event))
+        event: CloudEvent = CloudEvent(attributes=self.__attributes, data=record)
+        for x in self.__processors:
+            x.mapper()(event)
