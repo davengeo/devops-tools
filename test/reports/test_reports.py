@@ -1,14 +1,13 @@
 import logging
 import os
 import sys
-
-import pytest
+from typing import Tuple, Text
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 from devopstoolsdaven.reports.logger import logger_configurer, get_logger
 from devopstoolsdaven.reports.logging_processor import LoggingProcessor
 from devopstoolsdaven.reports.history_processor import HistoryProcessor
-from devopstoolsdaven.reports.report import Report, config2attributes
+from devopstoolsdaven.reports.report import Report, config2attributes, get_processors
 from devopstoolsdaven.reports.history import History
 from devopstoolsdaven.common.config import Config  # noqa: E402
 
@@ -16,17 +15,12 @@ config = Config(os.path.join(os.path.dirname(__file__), '../../app.ini'))
 
 
 def test_should_create_report() -> None:
-    pass
-    # hist: History = MagicMock()
-    # report = Report(config2attributes(config=config), history=hist)
-    # report.add_event(record={'action': 'new cloudEvent from unit test'})
-    # hist.persist.assert_called_with(event=ANY)
+    result: Tuple[Text] = get_processors(config=config)
+    print(result)
+    print(locals()['result'])
 
 
-@pytest.mark.wip
 def test_should_load_processors() -> None:
-    # result: Tuple[Text] = get_processors(config=config)
-    # print(result)
     hist: History = History(db_path=config.get_path(key='history'), context=(str({'example1': 'value1'}), 'test'))
     hist_proc: HistoryProcessor = HistoryProcessor(history=hist)
 

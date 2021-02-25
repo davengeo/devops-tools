@@ -16,4 +16,12 @@ class LoggingProcessor(Processor):
         return "logging"
 
     def mapper(self) -> Callable[[CloudEvent], Any]:
-        return lambda x: self.__logger.log(level=self.__level, msg=x)
+        return lambda event: self.__logger.log(level=self.__level, msg=event)
+
+
+def logging_processor_builder(**kwargs: dict) -> LoggingProcessor:
+    if kwargs.get('logger') is None or not hasattr(kwargs.get('logger'), 'log') \
+            or kwargs.get('level') is None or not isinstance(kwargs.get('level'), int):
+        raise ValueError
+    # noinspection PyTypeChecker
+    return LoggingProcessor(kwargs.get('logger'), kwargs.get('level'))
