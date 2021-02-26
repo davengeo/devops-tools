@@ -2,7 +2,6 @@ import os
 import sys
 from logging import Logger
 
-import pytest
 from assertpy import assert_that
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
@@ -12,7 +11,6 @@ from devopstoolsdaven.reports.logging_processor import logging_processor_builder
 from devopstoolsdaven.reports.logger import logger_configurer, get_logger  # noqa: E402
 
 config = Config(os.path.join(os.path.dirname(__file__), '../../app.ini'))
-
 
 
 def test_logging_builder_without_logging():
