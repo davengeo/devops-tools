@@ -14,7 +14,7 @@ from devopstoolsdaven.reports.logger import logger_configurer, get_logger  # noq
 config = Config(os.path.join(os.path.dirname(__file__), '../../app.ini'))
 
 
-@pytest.mark.wip
+
 def test_logging_builder_without_logging():
     try:
         logging_processor_builder(**{'hello': 'test'})
@@ -22,7 +22,6 @@ def test_logging_builder_without_logging():
         assert_that(e).is_instance_of(ValueError)
 
 
-@pytest.mark.wip
 def test_logging_builder_with_wrong_logging_type():
     try:
         logging_processor_builder(**{'logger': 'test', 'level': 1})
@@ -30,7 +29,6 @@ def test_logging_builder_with_wrong_logging_type():
         assert_that(e).is_instance_of(ValueError)
 
 
-@pytest.mark.wip
 def test_logging_builder_with_logger():
     logger_configurer(log_cfg=config.get_yaml_file(key='configuration', file_name='logging.yml'))
     logging: Logger = get_logger(name='app')

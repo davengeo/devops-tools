@@ -7,7 +7,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../.
 from devopstoolsdaven.reports.logger import logger_configurer, get_logger
 from devopstoolsdaven.reports.logging_processor import LoggingProcessor
 from devopstoolsdaven.reports.history_processor import HistoryProcessor
-from devopstoolsdaven.reports.report import Report, config2attributes, get_processors
+from devopstoolsdaven.reports.report import Report, config2attributes, get_configuration_list
 from devopstoolsdaven.reports.history import History
 from devopstoolsdaven.common.config import Config  # noqa: E402
 
@@ -15,7 +15,7 @@ config = Config(os.path.join(os.path.dirname(__file__), '../../app.ini'))
 
 
 def test_should_create_report() -> None:
-    result: Tuple[Text] = get_processors(config=config)
+    result: Tuple[Text] = get_configuration_list(config=config)
     print(result)
     print(locals()['result'])
 

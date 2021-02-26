@@ -10,7 +10,8 @@ def config2attributes(config: Config) -> Any:
     return config.get_section('CloudEvents')
 
 
-def get_processors(config: Config) -> Tuple[Text, ...]:
+# move this
+def get_configuration_list(config: Config) -> Tuple[Text, ...]:
     return config.get_tuple(section='Reports', key='processors')
 
 

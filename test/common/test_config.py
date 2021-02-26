@@ -1,4 +1,3 @@
-import logging
 import os
 import sys
 
@@ -8,12 +7,10 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../.
 from devopstoolsdaven.common.config import Config  # noqa: E402
 
 
-def test_should_get_config_for_logging_level() -> None:
+def test_should_get_config_for_config_folder() -> None:
     config = Config(os.path.join(os.path.dirname(__file__), '../../app.ini'))
-    logging_level = config.get_value('Paths','configuration')
-    assert_that(logging_level).is_equal_to('./config')
-    logging.basicConfig(format='%(levelname)s:%(message)s', level=logging_level)
-    logging.debug('testing config files')
+    config_folder = config.get_value('Paths', 'configuration')
+    assert_that(config_folder).is_equal_to('./config')
 
 
 def test_should_get_config_for_config_files() -> None:

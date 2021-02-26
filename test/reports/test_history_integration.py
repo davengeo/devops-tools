@@ -9,7 +9,7 @@ from devopstoolsdaven.common.config import Config  # noqa: E402
 config = Config(os.path.join(os.path.dirname(__file__), '../../app.ini'))
 
 
-@pytest.mark.integration
+
 def test_should_initialise_db() -> None:
     pass
     # input_file: Text = str({'param1': 'value1'})
