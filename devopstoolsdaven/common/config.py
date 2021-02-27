@@ -1,7 +1,7 @@
 import configparser
 import json
 import os
-from typing import Dict, Text, Tuple
+from typing import Dict, Text, Tuple, Optional
 
 import yaml
 
@@ -13,7 +13,9 @@ class Config(object):
         self.config = configparser.ConfigParser()
         self.config.read(path_file)
 
-    def get_value(self, section: str, key: str) -> str:
+    def get_value(self, section: str, key: str, default: Optional[str] = None) -> str:
+        if not self.config.has_option(section=section, option=key) and default is not None:
+            return default
         return self.config[section][key]
 
     def get_tuple(self, section: str, key: str) -> Tuple[Text, ...]:

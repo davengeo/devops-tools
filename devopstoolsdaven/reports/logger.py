@@ -3,7 +3,7 @@ from logging import Logger
 
 
 # noinspection StrFormat
-def logger_configurer(log_cfg: dict) -> None:
+def logger_setup(log_cfg: dict) -> None:
     logging.config.dictConfig(log_cfg)
 
 
