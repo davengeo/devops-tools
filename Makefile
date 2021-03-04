@@ -102,7 +102,7 @@ py-db-serve:  py-activate ## Serve the database by http in port HISTORY_PORT
 	${VENV_NAME}/bin/datasette serve --port ${HISTORY_PORT} ${HISTORY_DB}
 
 .PHONY: py-docker
-py-docker:  py-activate ## Serve the database by http in port HISTORY_PORT
+py-docker:  py-activate ## Build the docker image
 	$(eval DIST_NAME = $(call get_setup_value,name))
 	$(eval DIST_VERSION = $(call get_setup_value,version))
 	docker build . --tag ${DIST_NAME}:${DIST_VERSION}
