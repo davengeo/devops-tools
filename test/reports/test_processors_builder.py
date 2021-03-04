@@ -6,6 +6,7 @@ import pytest
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 
+from devopstoolsdaven.reports.fluentd_logger import FluentdLogger
 from devopstoolsdaven.reports.logger import logger_setup, get_logger
 from devopstoolsdaven.reports.history import History
 from devopstoolsdaven.reports.processors_builder import get_builder_map, processors_builder
@@ -24,10 +25,12 @@ def test_processors_builder():
            'logger': get_logger('app'),
            'logger.level': getattr(logging, config.get_value(section='Logging',
                                                              key='level',
-                                                             default='INFO'))
+                                                             default='INFO')),
+           'fluentd': FluentdLogger(tag='app', label='test')
            }
     )
     custom_builder_map = tuple(builder_map[x]
                                for x in builder_map.keys() if x in get_configuration_list(config=config))
     report = Report(config2attributes(config=config), processors=processors_builder(builder_map=custom_builder_map))
     report.add_event(record={'current_test': 'test_processors_builder'})
+    report.close()

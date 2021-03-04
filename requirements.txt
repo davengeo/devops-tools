@@ -6,6 +6,7 @@ invoke
 pyramda
 datasette
 PyYAML
+fluent-logger
 # development
 pytest~=6.2.2
 pytest-mock

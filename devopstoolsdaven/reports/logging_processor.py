@@ -1,3 +1,4 @@
+import logging
 from logging import Logger
 from typing import Callable, Any
 
@@ -17,6 +18,9 @@ class LoggingProcessor(Processor):
 
     def mapper(self) -> Callable[[CloudEvent], Any]:
         return lambda event: self.__logger.log(level=self.__level, msg=event)
+
+    def close(self) -> None:
+        self.__logger.log(level=logging.INFO, msg='closing resources...')
 
 
 def logging_processor_builder(**kwargs: dict) -> LoggingProcessor:

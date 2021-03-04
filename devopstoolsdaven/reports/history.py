@@ -53,6 +53,9 @@ class History(object):
         c.execute('''INSERT INTO Logs(executionId, record) VALUES (?, ?)''', (execution_id, event))
         self.__conn.commit()
 
+    def close(self) -> None:
+        self.__conn.close()
+
 
 class StateError(BaseException):
     def __init__(self, message: str):

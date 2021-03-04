@@ -10,7 +10,6 @@ def config2attributes(config: Config) -> Any:
     return config.get_section('CloudEvents')
 
 
-# move this
 def get_configuration_list(config: Config) -> Tuple[Text, ...]:
     return config.get_tuple(section='Reports', key='processors')
 
@@ -24,3 +23,7 @@ class Report(object):
         event: CloudEvent = CloudEvent(attributes=self.__attributes, data=record)
         for x in self.__processors:
             x.mapper()(event)
+
+    def close(self) -> None:
+        for proc in self.__processors:
+            proc.close()

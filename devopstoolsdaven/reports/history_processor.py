@@ -17,6 +17,10 @@ class HistoryProcessor(Processor):
     def mapper(self) -> Callable[[CloudEvent], Any]:
         return lambda x: self.__history.persist(str(x))
 
+    def close(self) -> None:
+        self.__history.close()
+
+
 
 def history_processor_builder(**kwargs: dict) -> HistoryProcessor:
     if kwargs.get('history') is None or not hasattr(kwargs.get('history'), 'persist'):

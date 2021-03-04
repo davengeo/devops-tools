@@ -1,6 +1,7 @@
 from collections import Callable
 from typing import List, Tuple
 
+from .fluentd_processor import fluentd_processor_builder
 from .history_processor import history_processor_builder
 from .logging_processor import logging_processor_builder
 from .processor import Processor
@@ -20,6 +21,12 @@ def get_builder_map(**kwargs) -> dict[str, dict]:
                 'logger': kwargs.get('logger'),
                 'level': kwargs.get('logger.level')
             }
+        },
+        'fluentd': {
+            'builder': fluentd_processor_builder,
+            'kwargs': {
+                'fluentd': kwargs.get('fluentd')
+            }
         }
     }
 
@@ -31,3 +38,6 @@ def processors_builder(builder_map: Tuple[dict]) -> List[Processor]:
         kwargs_i: dict = item.get('kwargs')
         result.append(proc_i(**kwargs_i))
     return result
+
+
+
