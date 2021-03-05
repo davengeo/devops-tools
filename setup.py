@@ -6,7 +6,7 @@ setup(
     description="devops base library dist",
     url="https://github.com/davengeo/devops-tools",
     name="devops-tools-daven",
-    version='0.0.3',
+    version='0.0.4',
     packages=[
         'devopstoolsdaven',
         'devopstoolsdaven.reports',
@@ -14,7 +14,16 @@ setup(
         'devopstoolsdaven.templates',
         'devopstoolsdaven.utils'
     ],
-    install_requires=['chevron', 'cloudevents', 'json-spec', 'invoke', 'datasette'],
+    install_requires=[
+        'argparse'
+        'chevron',
+        'cloudevents',
+        'json-spec',
+        'invoke',
+        'pyramda',
+        'datasette',
+        'PyYAML',
+        'fluent-logger'],
     package_data={
         'config': ['config/templates/hello_world.mustache', 'config/example/example.json'],
         'ini': ['app.ini']
