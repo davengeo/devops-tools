@@ -7,6 +7,7 @@ pyramda
 datasette
 PyYAML
 fluent-logger
+prometheus-client
 # development
 pytest~=6.2.2
 pytest-mock

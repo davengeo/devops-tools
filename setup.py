@@ -23,7 +23,9 @@ setup(
         'pyramda',
         'datasette',
         'PyYAML',
-        'fluent-logger'],
+        'fluent-logger',
+        'prometheus-client'
+    ],
     package_data={
         'config': ['config/templates/hello_world.mustache', 'config/example/example.json'],
         'ini': ['app.ini']
