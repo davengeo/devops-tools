@@ -9,10 +9,10 @@ PyYAML
 fluent-logger
 prometheus-client
 # development
-pytest~=6.2.2
+pytest
 pytest-mock
-assertpy~=1.1
-setuptools~=53.0.0
+assertpy
+setuptools
 wheel
 twine
 flake8

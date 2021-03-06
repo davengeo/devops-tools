@@ -8,7 +8,7 @@ from .processor import Processor
 
 
 def get_builder_map(**kwargs: dict) -> dict[str, dict]:
-    return {
+    return {make bootstrap
         'history': {
             'builder': history_processor_builder,
             'kwargs': {
