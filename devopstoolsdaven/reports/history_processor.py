@@ -1,4 +1,4 @@
-from typing import Callable, Any
+from typing import Callable, Any, cast
 
 from cloudevents.http import CloudEvent
 
@@ -21,9 +21,8 @@ class HistoryProcessor(Processor):
         self.__history.close()
 
 
-
 def history_processor_builder(**kwargs: dict) -> HistoryProcessor:
     if kwargs.get('history') is None or not hasattr(kwargs.get('history'), 'persist'):
         raise ValueError
     # noinspection PyTypeChecker
-    return HistoryProcessor(kwargs.get('history'))
+    return HistoryProcessor(cast(History, kwargs.get('history')))

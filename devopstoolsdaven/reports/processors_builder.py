@@ -1,5 +1,5 @@
 from collections import Callable
-from typing import List, Tuple
+from typing import List, Tuple, cast
 
 from .fluentd_processor import fluentd_processor_builder
 from .history_processor import history_processor_builder
@@ -7,7 +7,7 @@ from .logging_processor import logging_processor_builder
 from .processor import Processor
 
 
-def get_builder_map(**kwargs) -> dict[str, dict]:
+def get_builder_map(**kwargs: dict) -> dict[str, dict]:
     return {
         'history': {
             'builder': history_processor_builder,
@@ -34,10 +34,8 @@ def get_builder_map(**kwargs) -> dict[str, dict]:
 def processors_builder(builder_map: Tuple[dict]) -> List[Processor]:
     result: List[Processor] = []
     for item in builder_map:
-        proc_i: Callable = item.get('builder')
-        kwargs_i: dict = item.get('kwargs')
+        proc_i: Callable = cast(Callable, item.get('builder'))
+        # noinspection PyDeepBugsSwappedArgs
+        kwargs_i: dict = cast(dict, item.get('kwargs'))
         result.append(proc_i(**kwargs_i))
     return result
-
-
-

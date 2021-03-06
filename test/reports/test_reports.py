@@ -4,11 +4,11 @@ import sys
 from typing import Tuple, Text
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
-from devopstoolsdaven.reports.logger import logger_setup, get_logger
-from devopstoolsdaven.reports.logging_processor import LoggingProcessor
-from devopstoolsdaven.reports.history_processor import HistoryProcessor
-from devopstoolsdaven.reports.report import Report, config2attributes, get_configuration_list
-from devopstoolsdaven.reports.history import History
+from devopstoolsdaven.reports.logger import logger_setup, get_logger  # noqa: E402
+from devopstoolsdaven.reports.logging_processor import LoggingProcessor  # noqa: E402
+from devopstoolsdaven.reports.history_processor import HistoryProcessor  # noqa: E402
+from devopstoolsdaven.reports.report import Report, config2attributes, get_configuration_list  # noqa: E402
+from devopstoolsdaven.reports.history import History  # noqa: E402
 from devopstoolsdaven.common.config import Config  # noqa: E402
 
 config = Config(os.path.join(os.path.dirname(__file__), '../../app.ini'))

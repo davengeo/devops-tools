@@ -1,4 +1,4 @@
-from typing import Callable, Any
+from typing import Callable, Any, cast
 
 from cloudevents.http import CloudEvent
 
@@ -22,4 +22,4 @@ def fluentd_processor_builder(**kwargs: dict) -> FluentdProcessor:
     if kwargs.get('fluentd') is None or not hasattr(kwargs.get('fluentd'), 'forward'):
         raise ValueError
     # noinspection PyTypeChecker
-    return FluentdProcessor(kwargs.get('fluentd'))
+    return FluentdProcessor(cast(FluentdLogger, kwargs.get('fluentd')))

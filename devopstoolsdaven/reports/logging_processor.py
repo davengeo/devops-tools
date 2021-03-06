@@ -1,6 +1,6 @@
 import logging
 from logging import Logger
-from typing import Callable, Any
+from typing import Callable, Any, cast
 
 from cloudevents.http import CloudEvent
 
@@ -27,5 +27,5 @@ def logging_processor_builder(**kwargs: dict) -> LoggingProcessor:
     if kwargs.get('logger') is None or not hasattr(kwargs.get('logger'), 'log') \
             or kwargs.get('level') is None or not isinstance(kwargs.get('level'), int):
         raise ValueError
-    # noinspection PyTypeChecker
-    return LoggingProcessor(kwargs.get('logger'), kwargs.get('level'))
+    # noinspection PyTypeChecker,PyDeepBugsSwappedArgs
+    return LoggingProcessor(cast(Logger, kwargs.get('logger')), cast(int, kwargs.get('level')))

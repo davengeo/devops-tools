@@ -6,12 +6,12 @@ import pytest
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 
-from devopstoolsdaven.reports.fluentd_logger import FluentdLogger
-from devopstoolsdaven.reports.logger import logger_setup, get_logger
-from devopstoolsdaven.reports.history import History
-from devopstoolsdaven.reports.processors_builder import get_builder_map, processors_builder
-from devopstoolsdaven.reports.report import get_configuration_list, Report, config2attributes
-from devopstoolsdaven.common.config import Config
+from devopstoolsdaven.reports.fluentd_logger import FluentdLogger  # noqa: E402
+from devopstoolsdaven.reports.logger import logger_setup, get_logger  # noqa: E402
+from devopstoolsdaven.reports.history import History  # noqa: E402
+from devopstoolsdaven.reports.processors_builder import get_builder_map, processors_builder  # noqa: E402
+from devopstoolsdaven.reports.report import get_configuration_list, Report, config2attributes  # noqa: E402
+from devopstoolsdaven.common.config import Config  # noqa: E402
 
 config = Config(os.path.join(os.path.dirname(__file__), '../../app.ini'))
 
