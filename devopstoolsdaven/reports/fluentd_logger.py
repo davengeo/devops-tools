@@ -8,7 +8,7 @@ from fluent import sender
 class FluentdLogger(object):
 
     def __init__(self, tag: str, label: str) -> None:
-        self.__sender = sender.FluentSender(tag=tag, host='127.0.0.1', port=24224, nanosecond_precision=True)
+        self.__sender = sender.FluentSender(tag=tag, host='localhost', port=24224, nanosecond_precision=True)
         self.__label = label
 
     def forward(self, event: CloudEvent) -> None:

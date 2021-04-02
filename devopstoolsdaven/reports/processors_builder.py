@@ -1,5 +1,5 @@
 from collections import Callable
-from typing import List, Tuple, cast
+from typing import List, Tuple, cast, Dict
 
 from .fluentd_processor import fluentd_processor_builder
 from .history_processor import history_processor_builder
@@ -8,7 +8,7 @@ from .processor import Processor
 
 
 def get_builder_map(**kwargs: dict) -> dict[str, dict]:
-    return {make bootstrap
+    return {
         'history': {
             'builder': history_processor_builder,
             'kwargs': {
@@ -31,7 +31,7 @@ def get_builder_map(**kwargs: dict) -> dict[str, dict]:
     }
 
 
-def processors_builder(builder_map: Tuple[dict]) -> List[Processor]:
+def processors_builder(builder_map: Tuple[Dict, ...]) -> List[Processor]:
     result: List[Processor] = []
     for item in builder_map:
         proc_i: Callable = cast(Callable, item.get('builder'))

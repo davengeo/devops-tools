@@ -19,6 +19,7 @@ REQUEST_TIME = Summary('event_processing_seconds', 'Time spent processing event'
 
 
 class Report(object):
+
     def __init__(self, attributes: dict, processors: List[Processor]):
         self.__attributes: Dict = attributes
         self.__processors: List[Processor] = processors

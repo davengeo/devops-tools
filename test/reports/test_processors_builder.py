@@ -1,8 +1,9 @@
-import logging
 import os
 import sys
+from typing import Tuple, Any, Dict
 
 import pytest
+from prometheus_client import push_to_gateway, REGISTRY
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 
@@ -17,20 +18,24 @@ config = Config(os.path.join(os.path.dirname(__file__), '../../app.ini'))
 
 
 @pytest.mark.wip
-def test_processors_builder():
+def test_processors_builder() -> None:
     logger_setup(log_cfg=config.get_yaml_file(key='configuration', file_name='logging.yml'))
+    import logging
     builder_map = get_builder_map(
-        **{'history': History(db_path=config.get_path(key='history'),
-                              context=(str({'test_method': 'test_processors_builder'}), 'pytest')),
-           'logger': get_logger('app'),
-           'logger.level': getattr(logging, config.get_value(section='Logging',
-                                                             key='level',
-                                                             default='INFO')),
-           'fluentd': FluentdLogger(tag='app', label='test')
-           }
+        **{
+            'history': History(db_path=config.get_path(key='history'),
+                               context=(str({'test_method': 'test_processors_builder'}), 'pytest')),
+            'logger': get_logger('app'),
+            'logger.level': getattr(logging, config.get_value(section='Logging',
+                                                              key='level',
+                                                              default='INFO')),
+            'fluentd': FluentdLogger(tag='app', label='test')
+        }
     )
-    custom_builder_map = tuple(builder_map[x]
-                               for x in builder_map.keys() if x in get_configuration_list(config=config))
-    report = Report(config2attributes(config=config), processors=processors_builder(builder_map=custom_builder_map))
+    custom_builder_map: Tuple[Dict, ...] = tuple(
+        builder_map[x] for x in builder_map.keys() if x in get_configuration_list(config=config))
+    report = Report(attributes=config2attributes(config=config),
+                    processors=processors_builder(builder_map=custom_builder_map))
     report.add_event(record={'current_test': 'test_processors_builder'})
     report.close()
+    push_to_gateway('localhost:9091', job='integration-test', registry=REGISTRY)

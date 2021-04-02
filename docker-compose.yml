@@ -1,0 +1,45 @@
+version: "3.9"
+networks:
+  monitor-net:
+    driver: bridge
+services:
+  pushgateway:
+    image: prom/pushgateway
+    ports:
+      - 9091:9091
+    networks:
+      - monitor-net
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - ./monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+    ports:
+      - 9090:9090
+    networks:
+      - monitor-net
+  grafana:
+    image: grafana/grafana
+    depends_on:
+      - prometheus
+    ports:
+      - 3000:3000
+    volumes:
+      - ./monitoring/grafana/provisioning/:/etc/grafana/provisioning/
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=password
+      - GF_USERS_ALLOW_SIGN_UP=false
+    networks:
+      - monitor-net
+  fluentbits:
+    build:
+      context: ./fluentd
+    image: fluentbit-sidecar:1.0
+    ports:
+      - 24224:24224
+    networks:
+      - monitor-net
+
+
