@@ -41,5 +41,3 @@ services:
       - 24224:24224
     networks:
       - monitor-net
-
-
