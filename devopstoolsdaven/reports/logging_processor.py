@@ -24,10 +24,6 @@ class LoggingProcessor(Processor):
 
 
 def logging_processor_builder(**kwargs: dict) -> LoggingProcessor:
-    """
-
-    :rtype: object
-    """
     if kwargs.get('logger') is None or not hasattr(kwargs.get('logger'), 'log') \
             or kwargs.get('level') is None or not isinstance(kwargs.get('level'), int):
         raise ValueError
