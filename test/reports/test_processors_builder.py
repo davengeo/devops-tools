@@ -1,8 +1,9 @@
 import os
 import sys
-from typing import Tuple, Any, Dict
+from typing import Tuple, Dict
 
 import pytest
+# noinspection PyProtectedMember
 from prometheus_client import push_to_gateway, REGISTRY
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
@@ -29,13 +30,14 @@ def test_processors_builder() -> None:
             'logger.level': getattr(logging, config.get_value(section='Logging',
                                                               key='level',
                                                               default='INFO')),
-            'fluentd': FluentdLogger(tag='app', label='test')
+            'fluentd': FluentdLogger(tag='app', label='test', host='localhost', port=24224)
         }
     )
     custom_builder_map: Tuple[Dict, ...] = tuple(
         builder_map[x] for x in builder_map.keys() if x in get_configuration_list(config=config))
     report = Report(attributes=config2attributes(config=config),
                     processors=processors_builder(builder_map=custom_builder_map))
-    report.add_event(record={'current_test': 'test_processors_builder'})
+    report.add_event(record={'current_test': 'test_processors_builder 1'})
+    report.add_event(record={'current_test': 'test_processors_builder 2'})
     report.close()
     push_to_gateway('localhost:9091', job='integration-test', registry=REGISTRY)

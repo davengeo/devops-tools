@@ -13,21 +13,21 @@ from devopstoolsdaven.reports.logger import logger_setup, get_logger  # noqa: E4
 config = Config(os.path.join(os.path.dirname(__file__), '../../app.ini'))
 
 
-def test_logging_builder_without_logging():
+def test_logging_builder_without_logging() -> None:
     try:
         logging_processor_builder(**{'hello': 'test'})
     except Exception as e:
         assert_that(e).is_instance_of(ValueError)
 
 
-def test_logging_builder_with_wrong_logging_type():
+def test_logging_builder_with_wrong_logging_type() -> None:
     try:
         logging_processor_builder(**{'logger': 'test', 'level': 1})
     except Exception as e:
         assert_that(e).is_instance_of(ValueError)
 
 
-def test_logging_builder_with_logger():
+def test_logging_builder_with_logger() -> None:
     logger_setup(log_cfg=config.get_yaml_file(key='configuration', file_name='logging.yml'))
     logging: Logger = get_logger(name='app')
     processor: LoggingProcessor = logging_processor_builder(**{'logger': logging, 'level': 1})

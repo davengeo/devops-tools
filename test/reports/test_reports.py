@@ -1,7 +1,7 @@
 import logging
 import os
 import sys
-from typing import Tuple, Text
+from typing import Tuple
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 from devopstoolsdaven.reports.logger import logger_setup, get_logger  # noqa: E402
@@ -15,7 +15,7 @@ config = Config(os.path.join(os.path.dirname(__file__), '../../app.ini'))
 
 
 def test_should_create_report() -> None:
-    result: Tuple[Text] = get_configuration_list(config=config)
+    result: Tuple[str, ...] = get_configuration_list(config=config)
     print(result)
     print(locals()['result'])
 
