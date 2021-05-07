@@ -6,7 +6,7 @@ setup(
     description="devops base library dist",
     url="https://github.com/davengeo/devops-tools",
     name="devops-tools-daven",
-    version='0.0.5',
+    version='0.0.7',
     packages=[
         'devopstoolsdaven',
         'devopstoolsdaven.reports',
@@ -15,7 +15,7 @@ setup(
         'devopstoolsdaven.utils'
     ],
     install_requires=[
-        'argparse'
+        'argparse',
         'chevron',
         'cloudevents',
         'json-spec',
