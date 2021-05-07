@@ -42,8 +42,8 @@ class VaultLittle(Vault):
             raise VaultException(message='{}:{}'.format(response.status_code, response.reason), url=url)
         obj: Any = response.json()
         logging.info(
-            '\n\tAUTHENTICATED! Token received, lease time {} seconds.'
-                .format(obj.get('auth').get('lease_duration')))
+            '\n\tAUTHENTICATED! Token received, lease time {} seconds.'.format(obj.get('auth').get('lease_duration'))
+        )
         return cast(Text, obj.get('auth').get('client_token'))
 
     def write_secret(self, name: str, secret: dict) -> None:
