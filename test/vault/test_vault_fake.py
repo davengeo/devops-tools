@@ -5,10 +5,10 @@ from assertpy import assert_that
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 
-from devopstoolsdaven.vault.vault_fake import VaultFake
-from devopstoolsdaven.vault.vault import Vault
+from devopstoolsdaven.vault.vault_fake import VaultFake     # noqa: E402
+from devopstoolsdaven.vault.vault import Vault      # noqa: E402
 
-from devopstoolsdaven.common.config import Config
+from devopstoolsdaven.common.config import Config   # noqa: E402
 
 config = Config(os.path.join(os.path.dirname(__file__), '../../app.ini'))
 
