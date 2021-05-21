@@ -6,13 +6,14 @@ setup(
     description="devops base library dist",
     url="https://github.com/davengeo/devops-tools",
     name="devops-tools-daven",
-    version='0.0.8',
+    version='0.0.9',
     packages=[
         'devopstoolsdaven',
         'devopstoolsdaven.reports',
         'devopstoolsdaven.common',
         'devopstoolsdaven.templates',
-        'devopstoolsdaven.utils'
+        'devopstoolsdaven.utils',
+        'devopstoolsdaven.vault'
     ],
     install_requires=[
         'argparse',

@@ -84,8 +84,8 @@ py-build: 	## Build a tarball distribution file
 .PHONY: py-upload
 py-upload:  ## Upload a wheel to PyPi
 	${VENV_NAME}/bin/twine check dist/*
-	#${VENV_NAME}/bin/twine upload dist/* --config-file .pypirc --verbose
-	${VENV_NAME}/bin/twine upload dist/* --config-file .pypirc-prod --verbose
+	${VENV_NAME}/bin/twine upload dist/* --config-file .pypirc --verbose
+	#${VENV_NAME}/bin/twine upload dist/* --config-file .pypirc-prod --verbose
 
 .PHONY: py-full-build
 py-full-build: py-activate py-clean py-safety py-lint py-test py-build ## Clean, check, test, build but not upload.
