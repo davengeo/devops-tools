@@ -26,11 +26,17 @@ class Report(object):
         self.__c = Counter('events', 'dispatched events')
 
     @REQUEST_TIME.time()
-    def add_event(self, record: dict) -> None:
-        event: CloudEvent = CloudEvent(attributes=self.__attributes, data=record)
+    def add_event(self, attributes: dict, record: dict) -> None:
+        event: CloudEvent = CloudEvent(attributes=self.__attributes | attributes, data=record)
         for x in self.__processors:
             x.mapper()(event)
         self.__c.inc()
+
+    def add_event_with_type(self, event_type: str, record: dict) -> None:
+        return self.add_event(attributes={'type': event_type}, record=record)
+
+    def add_event_with_default_type(self, record: dict) -> None:
+        return self.add_event(attributes={}, record=record)
 
     def close(self) -> None:
         for proc in self.__processors:

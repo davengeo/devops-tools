@@ -31,4 +31,6 @@ def test_should_load_processors() -> None:
     log_proc: LoggingProcessor = LoggingProcessor(logger=get_logger('app'), level=logging.WARNING)
 
     report = Report(config2attributes(config=config), processors=[hist_proc, log_proc])
-    report.add_event(record={'hello': 'reported'})
+    report.add_event_with_type(event_type='test-in-library', record={'hello': 'reported'})
+    report.add_event_with_default_type(record={'hello': 'reported'})
+    report.add_event(attributes={'extra': 'hello'}, record={'hello': 'reported'})

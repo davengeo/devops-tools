@@ -37,7 +37,7 @@ def test_processors_builder() -> None:
         builder_map[x] for x in builder_map.keys() if x in get_configuration_list(config=config))
     report = Report(attributes=config2attributes(config=config),
                     processors=processors_builder(builder_map=custom_builder_map))
-    report.add_event(record={'current_test': 'test_processors_builder 1'})
-    report.add_event(record={'current_test': 'test_processors_builder 2'})
+    report.add_event_with_default_type(record={'current_test': 'test_processors_builder 1'})
+    report.add_event_with_default_type(record={'current_test': 'test_processors_builder 2'})
     report.close()
     push_to_gateway('localhost:9091', job='integration-test', registry=REGISTRY)
