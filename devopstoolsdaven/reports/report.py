@@ -1,3 +1,4 @@
+import logging
 import time
 from threading import Thread
 from typing import Dict, Any, Tuple, Text, List
@@ -38,6 +39,7 @@ class Report(Thread):
                 self.deliver_event(self.__buffer.pop(0))
             else:
                 time.sleep(1)
+        logging.info('finishing thread')
 
     @DELIVER_TIME.time()
     def deliver_event(self, event: CloudEvent) -> None:
@@ -58,3 +60,4 @@ class Report(Thread):
     def close(self) -> None:
         for proc in self.__processors:
             proc.close()
+        self.__stop_thread = STOP
