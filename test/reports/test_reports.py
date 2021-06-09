@@ -3,6 +3,8 @@ import os
 import sys
 from typing import Tuple
 
+import pytest
+
 from ..common.register_hook import unregister_metrics
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
@@ -22,6 +24,7 @@ def test_should_create_report() -> None:
     print(locals()['result'])
 
 
+@pytest.mark.wip
 def test_should_load_processors() -> None:
     unregister_metrics()
     hist: History = History(db_path=config.get_path(key='history'), context=(str({'example1': 'value1'}), 'test'))
