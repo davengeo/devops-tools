@@ -9,6 +9,8 @@ PyYAML
 fluent-logger
 prometheus-client
 # development
+types-requests
+types-pyyaml
 pytest
 pytest-mock
 assertpy
