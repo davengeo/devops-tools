@@ -21,7 +21,7 @@ def get_configuration_list(config: Config) -> Tuple[Text, ...]:
 REQUEST_TIME = Summary('event_requesting_seconds', 'Time spent requesting event')
 DELIVER_TIME = Summary('event_processing_seconds', 'Time spent processing event')
 STOP = False
-RUNNING = True
+RUNNING = not STOP
 
 
 class Report(Thread):
