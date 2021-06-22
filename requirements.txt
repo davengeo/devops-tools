@@ -6,6 +6,7 @@ invoke
 pyramda
 datasette
 PyYAML
+dependency-injector>=4.0,<5.0
 fluent-logger
 prometheus-client
 # development

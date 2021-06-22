@@ -20,21 +20,29 @@ def get_configuration_list(config: Config) -> Tuple[Text, ...]:
 
 REQUEST_TIME = Summary('event_requesting_seconds', 'Time spent requesting event')
 DELIVER_TIME = Summary('event_processing_seconds', 'Time spent processing event')
-STOP = 5
+STOP = False
+RUNNING = True
 
 
 class Report(Thread):
     __buffer: List[CloudEvent] = []
+    __state = STOP
 
-    def __init__(self, attributes: dict, processors: List[Processor]):
-        self.__attributes: Dict = attributes
+    def __init__(self, config: Config, processors: List[Processor]):
+        self.__attributes: Dict = config2attributes(config)
         self.__processors: List[Processor] = processors
         self.__c = Counter('events', 'dispatched events')
         super(Report, self).__init__(target=self.run, name='reporting')
-        self.__stop_thread = 0
+
+    def register_processors(self, processors: List[Processor]) -> None:
+        if self.__state == RUNNING:
+            raise Exception('Register processors cannot be called after start report')
+        for x in processors:
+            self.__processors.append(x)
 
     def run(self) -> None:
-        while self.__stop_thread != STOP:
+        self.__state = RUNNING
+        while self.__state is RUNNING:
             if len(self.__buffer) != 0:
                 self.deliver_event(self.__buffer.pop(0))
             else:
@@ -58,6 +66,7 @@ class Report(Thread):
         return self.add_event(attributes={}, record=record)
 
     def close(self) -> None:
+        self.__state = STOP
         for proc in self.__processors:
             proc.close()
-        self.__stop_thread = STOP
+        self.join()

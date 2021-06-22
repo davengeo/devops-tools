@@ -12,7 +12,7 @@ from devopstoolsdaven.reports.fluentd_logger import FluentdLogger  # noqa: E402
 from devopstoolsdaven.reports.logger import logger_setup, get_logger  # noqa: E402
 from devopstoolsdaven.reports.history import History  # noqa: E402
 from devopstoolsdaven.reports.processors_builder import get_builder_map, processors_builder  # noqa: E402
-from devopstoolsdaven.reports.report import get_configuration_list, Report, config2attributes  # noqa: E402
+from devopstoolsdaven.reports.report import get_configuration_list, Report  # noqa: E402
 from devopstoolsdaven.common.config import Config  # noqa: E402
 
 config = Config(os.path.join(os.path.dirname(__file__), '../../app.ini'))
@@ -35,8 +35,9 @@ def test_processors_builder() -> None:
     )
     custom_builder_map: Tuple[Dict, ...] = tuple(
         builder_map[x] for x in builder_map.keys() if x in get_configuration_list(config=config))
-    report = Report(attributes=config2attributes(config=config),
+    report = Report(config=config,
                     processors=processors_builder(builder_map=custom_builder_map))
+    report.start()
     report.add_event_with_default_type(record={'current_test': 'test_processors_builder 1'})
     report.add_event_with_default_type(record={'current_test': 'test_processors_builder 2'})
     report.close()

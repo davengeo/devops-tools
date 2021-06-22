@@ -23,10 +23,10 @@ class Config(object):
         return tuple(str(x).strip() for x in tuple(raw) if x)
 
     def get_section(self, section: str) -> Dict[Text, Text]:
-        result = {}
-        for key in self.config.options(section):
-            result[key] = self.config.get(section, key)
-        return result
+        return {
+            key: self.config.get(section, key)
+            for key in self.config.options(section)
+        }
 
     def get_path(self, key: str) -> str:
         return os.path.abspath(os.path.join(os.path.dirname(self.path_file), self.config['Paths'][key]))
