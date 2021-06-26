@@ -1,21 +1,16 @@
 import logging
 import time
 from threading import Thread
-from typing import Dict, Any, Tuple, Text, List
+from typing import Dict, Text, List, Generator
 
 from cloudevents.http import CloudEvent
+from devopsprocessor.processor import Processor
 from prometheus_client import Counter, Summary
 
-from .processor import Processor
-from ..common.config import Config
 
 
-def config2attributes(config: Config) -> Any:
-    return config.get_section('CloudEvents')
-
-
-def get_configuration_list(config: Config) -> Tuple[Text, ...]:
-    return config.get_tuple(section='Reports', key='processors')
+# def get_configuration_list(config: Config) -> Tuple[Text, ...]:
+#     return config.get_tuple(section='Reports', key='processors')
 
 
 REQUEST_TIME = Summary('event_requesting_seconds', 'Time spent requesting event')
@@ -28,11 +23,11 @@ class Report(Thread):
     __buffer: List[CloudEvent] = []
     __state = STOP
 
-    def __init__(self, config: Config, processors: List[Processor]):
-        self.__attributes: Dict = config2attributes(config)
+    def __init__(self, attributes: Dict[Text, Text], processors: List[Processor]) -> None:
+        self.__attributes: Dict[Text, Text] = attributes
         self.__processors: List[Processor] = processors
         self.__c = Counter('events', 'dispatched events')
-        super(Report, self).__init__(target=self.run, name='reporting')
+        super().__init__(target=self.run, name='reporting')
 
     def register_processors(self, processors: List[Processor]) -> None:
         if self.__state == RUNNING:
@@ -70,3 +65,10 @@ class Report(Thread):
         for proc in self.__processors:
             proc.close()
         self.join()
+
+
+def init_report(attributes: Dict[Text, Text], processors: List[Processor]) -> Generator:
+    report: Report = Report(attributes=attributes, processors=processors)
+    report.start()
+    yield report
+    report.close()

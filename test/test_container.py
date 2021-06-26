@@ -1,41 +1,59 @@
-import logging
 import os
 import sys
 import time
+from typing import Text
 
 import pytest
-from assertpy import assert_that
+from assertpy import assert_that, fail
+
+from .common.register_hook import unregister_metrics
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from devopstoolsdaven.common.config import Config
 from devopstoolsdaven.container import Container
-from devopstoolsdaven.reports.logger import logger_setup, get_logger
-from devopstoolsdaven.reports.logging_processor import LoggingProcessor
 from devopstoolsdaven.reports.report import Report
+from devopstoolsdaven.vault.vault import Vault
 
 
 @pytest.mark.wip
 def test_should_instantiate_config_from_di_container() -> None:
-    container: Container = Container(
-        config_dependency=Config(path_file=os.path.join(os.path.dirname(__file__), '../app.ini'))
-    )
-    config: Config = container.config_dependency()
-    assert_that(config.get_value('Logging', 'level')).is_equal_to('INFO')
+    container: Container = Container()
+    container.config.from_ini(os.path.join(os.path.dirname(__file__), '../app.ini'))
+    assert_that(container.config.logging()['level']).is_instance_of(Text)
+
+
+@pytest.mark.wip
+def test_should_instantiate_templates_from_di_container() -> None:
+    container: Container = Container()
+    container.config.from_ini(os.path.join(os.path.dirname(__file__), '../app.ini'))
+    templates = container.template_service()
+    result = templates.render(template_name='hello_world', data={'mustache': 'Unit test'})
+    assert_that(result).is_equal_to('Hello, Unit test!')
 
 
 @pytest.mark.wip
 def test_should_instantiate_report_from_di_container() -> None:
-    container: Container = Container(
-        config_dependency=Config(path_file=os.path.join(os.path.dirname(__file__), '../app.ini'))
-    )
-    config: Config = container.config_dependency()
-    logger_setup(log_cfg=config.get_yaml_file(key='configuration', file_name='logging.yml'))
-    log_proc: LoggingProcessor = LoggingProcessor(logger=get_logger('app'), level=logging.WARNING)
+    unregister_metrics()
+    container: Container = Container()
+    container.config.from_ini(os.path.join(os.path.dirname(__file__), '../app.ini'))
+    container.init_resources()
     report: Report = container.report_service()
-    report.register_processors([log_proc])
-    report.start()
+    assert_that(report.is_alive()).is_true()
     report.add_event_with_type(event_type='testing event', record={
         'method': 'test_should_instantiate_report_from_DI_container'
     })
     time.sleep(2)
-    report.close()
+    container.shutdown_resources()
+
+
+@pytest.mark.wip
+def test_should_instantiate_vault_from_di_container() -> None:
+    unregister_metrics()
+    container: Container = Container()
+    container.config.from_ini(os.path.join(os.path.dirname(__file__), '../app.ini'))
+    container.init_resources()
+    vault: Vault = container.vault_service()
+    if vault.is_authenticated():
+        assert_that(vault.read_secret('test')).is_equal_to({'test': 'OK'})
+    else:
+        fail()(msg='should be authenticated')
+    container.shutdown_resources()

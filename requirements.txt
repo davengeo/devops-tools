@@ -9,6 +9,7 @@ PyYAML
 dependency-injector>=4.0,<5.0
 fluent-logger
 prometheus-client
+devopsprocessor_ifn==0.1.0
 # development
 types-requests
 types-pyyaml

@@ -1,6 +1,6 @@
 import chevron
 
-from ..common.config import Config
+from devopstoolsdaven.common.config import get_file_path
 
 TEMPLATES = 'templates'
 
@@ -11,11 +11,11 @@ def simple_render(template: str, data: dict) -> str:
 
 class Templates(object):
 
-    def __init__(self, config: Config) -> None:
-        self.config: Config = config
+    def __init__(self, templates_folder: str) -> None:
+        self.__templates_folder: str = templates_folder
 
     def render(self, template_name: str, data: dict) -> str:
-        file_path = self.config.get_file_path(TEMPLATES, '{}.mustache'.format(template_name))
+        file_path = get_file_path(self.__templates_folder, '{}.mustache'.format(template_name))
         template: str
         with open(file_path, mode='r') as f:
             template = f.read()

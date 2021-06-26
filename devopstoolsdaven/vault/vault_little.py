@@ -19,7 +19,7 @@ class VaultLittle(Vault):
         self.__url = url
         self.__env = env
 
-    def is_authenticated(self, count: int) -> bool:
+    def is_authenticated(self, count: int = 0) -> bool:
         if self.__token is not None:
             return True
         if count > LIMIT:

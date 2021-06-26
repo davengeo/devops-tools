@@ -6,7 +6,7 @@ class Vault(ABC):
     __token: Union[Text, None] = None
 
     @abstractmethod
-    def is_authenticated(self, count: int) -> bool:
+    def is_authenticated(self, count: int = 0) -> bool:
         pass
 
     @abstractmethod
