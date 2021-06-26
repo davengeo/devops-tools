@@ -9,9 +9,9 @@ from assertpy import assert_that, fail
 from .common.register_hook import unregister_metrics
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from devopstoolsdaven.container import Container
-from devopstoolsdaven.reports.report import Report
-from devopstoolsdaven.vault.vault import Vault
+from devopstoolsdaven.container import Container  # noqa: E402
+from devopstoolsdaven.reports.report import Report  # noqa: E402
+from devopstoolsdaven.vault.vault import Vault  # noqa: E402
 
 
 @pytest.mark.wip

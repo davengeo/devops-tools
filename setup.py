@@ -6,7 +6,7 @@ setup(
     description="devops base library dist",
     url="https://github.com/davengeo/devops-tools",
     name="devops-tools-daven",
-    version='0.0.12',
+    version='0.0.14',
     packages=[
         'devopstoolsdaven',
         'devopstoolsdaven.reports',
@@ -22,10 +22,11 @@ setup(
         'json-spec',
         'invoke',
         'pyramda',
-        'datasette',
         'PyYAML',
         'fluent-logger',
-        'prometheus-client'
+        'prometheus-client',
+        'dependency-injector>=4.0,<5.0',
+        'devopsprocessor_ifn==0.1.0'
     ],
     package_data={
         'config': ['config/templates/hello_world.mustache', 'config/example/example.json'],

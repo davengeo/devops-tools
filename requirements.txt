@@ -4,10 +4,8 @@ cloudevents
 json-spec
 invoke
 pyramda
-datasette
 PyYAML
 dependency-injector>=4.0,<5.0
-fluent-logger
 prometheus-client
 devopsprocessor_ifn==0.1.0
 # development

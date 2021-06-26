@@ -7,12 +7,6 @@ from cloudevents.http import CloudEvent
 from devopsprocessor.processor import Processor
 from prometheus_client import Counter, Summary
 
-
-
-# def get_configuration_list(config: Config) -> Tuple[Text, ...]:
-#     return config.get_tuple(section='Reports', key='processors')
-
-
 REQUEST_TIME = Summary('event_requesting_seconds', 'Time spent requesting event')
 DELIVER_TIME = Summary('event_processing_seconds', 'Time spent processing event')
 STOP = False
